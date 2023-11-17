@@ -1,72 +1,84 @@
+-- Aprés être rentrer dans votre database a l'aide de cette commande
+-- psql -U postgres -h localhost
+-- normalement votre mdp est root
+-- ensuite faire un copier coller du script
+CREATE DATABASE food
+WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'French_France.1252'
+    LC_CTYPE = 'French_France.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 
-Table Users {
-  id serial  [primary key]
-  username varchar
-  password varchar
-  email varchar [unique]
-  role integer
-  created_at timestamp [default: `now()`]
+-- Utilisation de la base de données nouvellement créée
+\c food
 
-}
+-- Création de la table Users
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR,
+    password VARCHAR,
+    email VARCHAR UNIQUE,
+    role INTEGER,
+    created_at TIMESTAMP DEFAULT now()
+);
 
-Table Restaurant {
-  id serial  [primary key]
-  name varchar
-  description text
-  created_date timestamp [default: `now()`]
-  address  varchar
-  type_restaurant varchar
-  commander boolean
-  reserver boolean
-  picture bytea
+-- Création de la table Restaurant
+CREATE TABLE Restaurant (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR,
+    description TEXT,
+    created_date TIMESTAMP DEFAULT now(),
+    address VARCHAR,
+    type_restaurant VARCHAR,
+    commander BOOLEAN,
+    reserver BOOLEAN,
+    picture VARCHAR
+);
 
-}
+-- Création de la table Commande
+CREATE TABLE Commande (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(id),
+    restaurant_id INTEGER REFERENCES Restaurant(id),
+    plat_commande VARCHAR,
+    montant_total DECIMAL,
+    etat_commande VARCHAR,
+    created_at TIMESTAMP DEFAULT now()
+);
 
-Table Commande {
-  id serial [primary key]
-  user_id integer 
-  restaurant_id integer 
-  plat_commande varchar
-  montant_total decimal
-  etat_commande varchar
-  created_at timestamp [default: `now()`]
-}
+-- Création de la table Reservation
+CREATE TABLE Reservation (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(id),
+    restaurant_id INTEGER REFERENCES Restaurant(id),
+    nombre_personnes INTEGER,
+    date_reservation DATE,
+    etat_reservation VARCHAR,
+    created_at TIMESTAMP DEFAULT now()
+);
 
-Table Reservation {
-  id serial [primary key]
-  user_id integer 
-  restaurant_id integer 
-  nombre_personnes integer
-  date_reservation date
-  etat_reservation varchar
-  created_at timestamp [default: `now()`]
-}
+-- Création de la table Payment
+CREATE TABLE Payment (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES Users(id),
+    order_id INTEGER REFERENCES Commande(id),
+    reservation_id INTEGER REFERENCES Reservation(id),
+    amount DECIMAL,
+    payment_status VARCHAR,
+    payment_method VARCHAR,
+    transaction_id VARCHAR,
+    created_at TIMESTAMP DEFAULT now()
+);
 
-Table Payment {
-  id serial [primary key]
-  user_id integer 
-  order_id integer 
-  reservation_id integer 
-  amount decimal
-  payment_status varchar
-  payment_method varchar
-  transaction_id varchar
-  created_at timestamp [default: `now()`]
-}
-
-
-
-
-Ref: "users"."id" < "Commande"."user_id"
-
-Ref: "users"."id" < "Reservation"."user_id"
-
-Ref: "Restaurant"."id" < "Reservation"."restaurant_id"
-
-Ref: "Restaurant"."id" < "Commande"."restaurant_id"
-
-Ref: "Payment"."reservation_id" < "Reservation"."id"
-
-Ref: "Payment"."user_id" < "users"."id"
-
-Ref: "Payment"."order_id" < "Commande"."id"
+-- Contraintes de clé étrangère supplémentaires
+ALTER TABLE Commande ADD CONSTRAINT fk_user_id_cmd FOREIGN KEY (user_id) REFERENCES Users(id);
+ALTER TABLE Reservation ADD CONSTRAINT fk_user_id_res FOREIGN KEY (user_id) REFERENCES Users(id);
+ALTER TABLE Reservation ADD CONSTRAINT fk_restaurant_id FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id);
+ALTER TABLE Commande ADD CONSTRAINT fk_restaurant_id_cmd FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id);
+ALTER TABLE Payment ADD CONSTRAINT fk_reservation_id FOREIGN KEY (reservation_id) REFERENCES Reservation(id);
+ALTER TABLE Payment ADD CONSTRAINT fk_user_id_pay FOREIGN KEY (user_id) REFERENCES Users(id);
+ALTER TABLE Payment ADD CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES Commande(id);
