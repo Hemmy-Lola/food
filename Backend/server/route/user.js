@@ -1,6 +1,14 @@
 const express = require("express");
 const router = new express.Router();
-const connection = require("../db")
+const connection = require("../config/db")
 
+// import controller user
+const {signupUsers , loginUsers } = require('../controllers/userController')
+
+// login route
+router.post('/login',loginUsers)
+
+// Signup route
+router.post('/signup',signupUsers)
 
 module.exports = router;
