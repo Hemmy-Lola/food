@@ -20,7 +20,7 @@
 - SQL - [MySQL] / [PostgreSQL] (ORM - [Sequelize] / [Prisma])
 - [Docker]
 - [GitHub Actions]
-- Hébergement - [AWS] / [Vercel]
+- Hébergement - [AWS] / [Vercel] / [Plesk]
 
 **Syntaxe, bibliothèques et concepts**
 
