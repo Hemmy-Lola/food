@@ -30,13 +30,13 @@ CREATE TABLE Users (
 CREATE TABLE Restaurant (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
-    description TEXT,
-    created_date TIMESTAMP DEFAULT now(),
+    description TEXT,    
     address VARCHAR,
     type_restaurant VARCHAR,
     commander BOOLEAN,
     reserver BOOLEAN,
-    picture VARCHAR
+    picture VARCHAR,
+    created_date TIMESTAMP DEFAULT now(),
 );
 
 -- Création de la table Commande
