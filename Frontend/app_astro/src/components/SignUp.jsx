@@ -1,11 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Image1 from "../Images/Image1.jpg"
 
-export function InputText({ id, label }){
+export function Input({ type, id, label, form, setForm}){
+
+    function isInput(value,input){
+        if(input === "name"){
+            return {...form, name: value}
+        }
+        if(input === "password"){
+            return {...form, password: value}
+        }
+        if(input === "confirm"){
+            return {...form, confirm: value}
+        }
+        if(input === "email"){
+            return {...form, email: value}
+        }
+        if(input === "phone"){
+            return {...form, phone: value}
+        }
+    }
     return (
         <>
         <label htmlFor={ id }>{ label }</label>
-        <input type="text" name={id} id={ id }/>
+        <input type={type} name={id} id={ id } onChange={(e) => setForm(isInput(e.target.value,id))}/>
         </>
     )
 }
@@ -24,24 +42,22 @@ export function OthersMethods(){
         <div>
             <Button id="google" value="Google" svg={""}/>
             <Button id="facebook" value="Facebook" svg={""}/>
-            <Button id="instagram" value="instagram" svg={""}/>
+            <Button id="instagram" value="Instagram" svg={""}/>
         </div>
     )
 }
 
-function Inscription(){
+function Inscription({ form, setForm, sendForm}){
     return (
         <div className="container-signup">
             <div className="form-signup">
-                <form>
+                <form onSubmit={sendForm}>
                     <div className="title">INSCRIPTION</div>
-                    <InputText id="email" label="Adresse mail"/>
-                    <label htmlFor="password">Mot de passe</label>
-                    <input type="password" id="password" label="Mot de passe"/>
-                    <label htmlFor="confirm-password">Confirmer le mot de passe</label>
-                    <input type="password" id="confirm-password" label="Confirmer le mot de passe"/>
-                    <InputText id="number" label="Numéro de téléphone"/>
-                    <InputText id="email" label="Adresse mail"/>
+                    <Input type="text" id="name" label="Nom" form={form} setForm={setForm}/>
+                    <Input type="text" id="email" label="Adresse mail" form={form} setForm={setForm}/>
+                    <Input type="password" id="password" label="Mot de passe" form={form} setForm={setForm}/>
+                    <Input type="password" id="confirm" label="Confirmer le mot de passe" form={form} setForm={setForm}/>
+                    <Input type="text" id="phone" label="Numéro de téléphone" form={form} setForm={setForm}/>
                     <div className="links">
                         <a href="/" id="login">Déjà inscrit? Connectez-vous</a>
                     </div>
@@ -62,12 +78,26 @@ function BackgroundImage(){
 }
 
 export default function LogIn() {
+
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+    phone: ""
+  })
+
+  function sendForm(e,form){
+    e.preventDefault()
+    console.log(form)
+  }
+
   return (
     <>
         <header></header>
         <div className="signup">
             <BackgroundImage />
-            <Inscription />
+            <Inscription form={form} setForm={setForm} sendForm={(e) => sendForm(e,form)}/>
         </div>
         <footer></footer>
     </>

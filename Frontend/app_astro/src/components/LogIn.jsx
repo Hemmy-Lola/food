@@ -1,19 +1,18 @@
-import React from 'react'
-import { InputText } from "./SignUp.jsx"
+import React, { useState } from 'react'
+import { Input } from "./SignUp.jsx"
 import { OthersMethods } from "./SignUp.jsx"
-import Image1 from "../../public/Image1.jpg"
+import Image1 from "../Images/Image1.jpg"
 
-function Connexion(){
+function Connexion({ form, setForm, sendForm }){
     return (
         <div className="container-login">
             <div className="form-login">
-                <form>
+                <form onSubmit={sendForm}>
                 <div className="title">CONNEXION</div>
-                <InputText id="email" label="Adresse mail"/>
-                <label htmlFor="password">Mot de passe</label>
-                <input type="password" id="password" label="Mot de passe"/>
+                <Input type="text" id="email" label="Adresse mail" form={form} setForm={setForm}/>
+                <Input type="password" id="password" label="Mot de passe" form={form} setForm={setForm}/>
                 <div className="links">
-                    <a href="#" id="forgotten-password">Mot de passe oublié</a>
+                    <a href="/resetpassword/" id="forgotten-password">Mot de passe oublié</a>
                     <a href="/signup/" id="signup">Inscrivez-vous</a>
                 </div>
                 <input type="submit" value="Se connecter" />
@@ -33,12 +32,22 @@ function BackgroundImage(){
 }
 
 export default function LogIn() {
+    const [form, setForm] = useState({
+        email: "",
+        password: ""
+    })
+    
+    function sendForm(e,form){
+        e.preventDefault()
+        console.log(form)
+    }
+      
   return (
     <>
         <header></header>
         <div className="login">
             <BackgroundImage />
-            <Connexion />
+            <Connexion form={form} setForm={setForm} sendForm={(e) => sendForm(e,form)} />
         </div>
         <footer></footer>
     </>
