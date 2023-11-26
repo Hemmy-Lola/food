@@ -1,6 +1,6 @@
 import React,{ useState } from 'react'
 import { Input } from "./SignUp"
-import Image1 from "../../src/Images/Image1.jpg"
+import Image1 from "../Images/Image1.jpg"
 
 function Change({form, setForm, sendForm, setSent, sent}){
     return (
@@ -19,7 +19,7 @@ function Change({form, setForm, sendForm, setSent, sent}){
 function BackgroundImage(){
     return (
         <div className="background">
-            <img src={Image1} alt="BackgroundImages" id="background"/>
+            <img src={Image1.src} alt="BackgroundImages" id="background"/>
         </div>
     )
 }

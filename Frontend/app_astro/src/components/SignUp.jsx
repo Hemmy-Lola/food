@@ -72,7 +72,7 @@ function Inscription({ form, setForm, sendForm}){
 function BackgroundImage(){
     return (
         <div className="background">
-            <img src={Image1} alt="BackgroundImages" id="background"/>
+            <img src={Image1.src} alt="BackgroundImages" id="background"/>
         </div>
     )
 }
