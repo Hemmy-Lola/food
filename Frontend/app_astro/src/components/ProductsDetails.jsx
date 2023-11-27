@@ -1,10 +1,11 @@
 import React from 'react'
 import Image from "../Images/Hamburger.jpg"
+import Image2 from "../Images/Hamburger 2.jpg"
 
 function Banner(){
     return (
         <div className="banner">
-            <img src={Image} alt="Banner" id="banner"/>
+            <img src={Image.src} alt="Banner" id="banner"/>
         </div>
     )
 }
@@ -13,7 +14,7 @@ function Banner(){
 function Note({ note }){
     return(
            <div className="note">
-            <p>{note}</p>
+            <span>{note}</span>
            </div> 
     )
 }
@@ -34,7 +35,7 @@ function Details(){
     return (
         <div className="details">
             <div className="left">
-                <img src={Image} alt="Banner" id="details"/>
+                <img src={Image.src} alt="Banner" id="details"/>
                 
                 <div className="notes">
                     <Notes />
@@ -85,15 +86,17 @@ function Modalities(){
 function Comment(){
     return (
         <div className="comment">
-            <div>
+            <div className="top">
                 <div className="picture left"></div>
                 <div className="right">
-                    <div className="name"></div>
-                    <div className="day"></div>
-                    <div className="note"></div>
+                    <div className="left">
+                        <div className="name">Gauthier Théophile</div>
+                        <div className="day">22/10/2023</div>
+                    </div>
+                    <div className="note-comment">4/5</div>
                 </div>
             </div>
-            <p className="comment"></p>
+            <p className="comment-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem delectus vero, nihil fuga, tempora nemo vitae, autem totam optio praesentium deleniti cupiditate aspernatur sed error id repellat ullam voluptatem quasi.</p>
         </div>
     )
 }
@@ -110,10 +113,10 @@ function Comments(){
 
 function Images(){
     return (
-        <div>
-            <img src="../Images/Hamburger 2.jpg" alt="Place" className="place"/>
-            <img src="../Images/Hamburger 2.jpg" alt="Place" className="place"/>
-            <img src="../Images/Hamburger 2.jpg" alt="Place" className="place"/>
+        <div className="places">
+            <img src={Image2.src} alt="Place" className="place"/>
+            <img src={Image2.src} alt="Place" className="place"/>
+            <img src={Image2.src} alt="Place" className="place"/>
         </div>
     )
 }

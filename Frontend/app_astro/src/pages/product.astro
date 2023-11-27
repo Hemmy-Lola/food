@@ -1,0 +1,12 @@
+---
+import Layout from "../layouts/Layout.astro"
+import DetailsOfProducts from "../components/ProductsDetails.jsx"
+import "../App.scss"
+---
+<Layout title="Restaurants">
+
+    <main>
+        <DetailsOfProducts client:load/>
+    </main>
+
+</Layout>
