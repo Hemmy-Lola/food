@@ -30,13 +30,13 @@ CREATE TABLE Users (
 CREATE TABLE Restaurant (
     id SERIAL PRIMARY KEY,
     name VARCHAR,
-    description TEXT,    
+    description TEXT,
+    created_date TIMESTAMP DEFAULT now(),
     address VARCHAR,
     type_restaurant VARCHAR,
     commander BOOLEAN,
     reserver BOOLEAN,
-    picture VARCHAR,
-    created_date TIMESTAMP DEFAULT now(),
+    picture VARCHAR
 );
 
 -- Création de la table Commande
@@ -68,7 +68,7 @@ CREATE TABLE Payment (
     order_id INTEGER REFERENCES Commande(id),
     reservation_id INTEGER REFERENCES Reservation(id),
     amount DECIMAL,
-    payment_status VARCHAR,
+    payment_status VARCHAR(64),
     payment_method VARCHAR,
     transaction_id VARCHAR,
     created_at TIMESTAMP DEFAULT now()
@@ -82,3 +82,15 @@ ALTER TABLE Commande ADD CONSTRAINT fk_restaurant_id_cmd FOREIGN KEY (restaurant
 ALTER TABLE Payment ADD CONSTRAINT fk_reservation_id FOREIGN KEY (reservation_id) REFERENCES Reservation(id);
 ALTER TABLE Payment ADD CONSTRAINT fk_user_id_pay FOREIGN KEY (user_id) REFERENCES Users(id);
 ALTER TABLE Payment ADD CONSTRAINT fk_order_id FOREIGN KEY (order_id) REFERENCES Commande(id);
+
+
+
+
+
+
+
+
+
+
+
+CREATE
